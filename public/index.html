@@ -3,67 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f6f1">
-  <meta name="description" content="Um espaço acolhedor para conversar sobre como você está se sentindo.">
-  <title>AcolheAI — Um espaço para conversar</title>
+  <meta name="theme-color" content="#f6f3eb">
+  <meta name="description" content="AcolheAI é um espaço experimental de conversa para apoio emocional inicial.">
+  <title>AcolheAI | Conversa de apoio emocional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#message-input">Ir para a conversa</a>
+  <a class="skip-link" href="#message-input">Pular para a conversa</a>
 
   <header class="site-header">
-    <a class="brand" href="/" aria-label="AcolheAI, página inicial">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" fill="none">
-          <path d="M24.9 6.6c-8.5.1-14.5 2.5-16.7 7.1-1.8 3.7.4 7.7 4.2 8.2 4.6.6 9.9-4 12.5-15.3Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M8.5 25.4c3.1-5.1 7-8.6 11.7-11.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span class="brand-copy"><strong>AcolheAI</strong><span>Um espaço para conversar</span></span>
-    </a>
-    <span class="header-label"><span class="header-dot" aria-hidden="true"></span> Apoio emocional inicial</span>
+    <a class="wordmark" href="/" aria-label="AcolheAI, início">AcolheAI</a>
+    <a class="header-action" href="#conversa">Iniciar conversa</a>
   </header>
 
   <main class="page-layout">
-    <section class="welcome" aria-labelledby="welcome-title">
-      <p class="eyebrow">Um momento de cada vez</p>
-      <h1 id="welcome-title">Você pode começar pelo que está sentindo.</h1>
-      <p class="welcome-copy">Nem sempre é fácil encontrar as palavras. Escreva no seu ritmo; este espaço foi pensado para uma conversa acolhedora.</p>
+    <section class="introduction" aria-labelledby="page-title">
+      <h1 id="page-title">Um lugar para conversar, no seu ritmo.</h1>
+      <p class="introduction-copy">O AcolheAI é um projeto experimental de conversa com inteligência artificial para apoio emocional inicial. Você pode escrever sobre o que está sentindo sem precisar organizar tudo antes.</p>
+      <a class="primary-action" href="#conversa">Iniciar conversa</a>
 
-      <div class="privacy-note">
-        <span class="note-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 10V7.5a5 5 0 0 1 10 0V10m-11 0h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </span>
-        <p><strong>Compartilhe só o que for confortável.</strong><br>Suas mensagens são processadas por uma inteligência artificial. Evite incluir dados pessoais.</p>
-      </div>
-
-      <div class="suggestions" id="suggestions">
-        <p class="suggestions-title">Se ajudar, você pode começar assim:</p>
-        <div class="suggestion-list">
-          <button class="suggestion" type="button" data-suggestion="Não sei bem por onde começar.">Não sei por onde começar</button>
-          <button class="suggestion" type="button" data-suggestion="Hoje foi um dia difícil para mim.">Falar sobre meu dia</button>
-          <button class="suggestion" type="button" data-suggestion="Estou me sentindo sobrecarregado.">Estou me sentindo sobrecarregado</button>
-        </div>
-      </div>
-
-      <p class="welcome-footnote">Projeto experimental de apoio emocional inicial.</p>
+      <aside class="privacy-note" aria-label="Sobre privacidade e limites">
+        <p><strong>Antes de começar</strong><br>O site carrega fontes do Google Fonts. As mensagens são processadas pelo serviço de inteligência artificial configurado. Evite compartilhar dados pessoais. A ferramenta não substitui acompanhamento profissional.</p>
+      </aside>
     </section>
 
-    <section class="conversation-card" aria-labelledby="conversation-title">
+    <section class="conversation" id="conversa" aria-labelledby="conversation-title">
       <header class="conversation-header">
-        <span class="assistant-avatar" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M16 5.5c-6.1 0-10 4.2-10 9.5v5.2a2.3 2.3 0 0 0 2.3 2.3h1.4v-7.1H8.4c.1-4.2 3-7.2 7.6-7.2s7.5 3 7.6 7.2h-1.3v7.1h1.4a2.3 2.3 0 0 0 2.3-2.3V15c0-5.3-3.9-9.5-10-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M11.5 16.3v2.1m9-2.1v2.1M12 24.5c1.1 1 2.4 1.5 4 1.5 1.5 0 2.9-.5 4-1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </span>
-        <div class="conversation-heading">
-          <h2 id="conversation-title">AcolheAI</h2>
-          <p>Assistente de apoio com IA</p>
+        <div>
+          <h2 id="conversation-title">Conversa</h2>
+          <p>AcolheAI. Assistente com inteligência artificial.</p>
         </div>
-        <span class="ai-badge">IA</span>
       </header>
 
       <div class="messages" id="messages" role="log" aria-label="Mensagens da conversa" aria-live="polite" aria-relevant="additions text">
-        <article class="message message-assistant">
+        <article class="message assistant-message">
           <p>Oi. Este é um espaço para você falar no seu ritmo. O que tem passado pela sua cabeça hoje?</p>
           <time class="message-time"></time>
         </article>
@@ -71,22 +48,26 @@
 
       <p class="chat-status" id="chat-status" role="status" aria-live="polite"></p>
 
-      <form class="composer" id="chat-form">
+      <form class="composer" id="chat-form" method="post" action="/conversa">
         <label class="visually-hidden" for="message-input">Escreva sua mensagem</label>
         <textarea id="message-input" name="mensagem" rows="2" maxlength="4000" placeholder="Escreva o que estiver à vontade para compartilhar..." required></textarea>
+        <input type="hidden" id="history-input" name="historico" value="[]">
         <div class="composer-bottom">
-          <span class="keyboard-hint">Enter envia <span aria-hidden="true">·</span> Shift + Enter pula linha</span>
-          <button class="send-button" id="send-button" type="submit" aria-label="Enviar mensagem" disabled>
+          <span class="keyboard-hint">Enter envia · Shift + Enter pula linha</span>
+          <button class="send-button" id="send-button" type="submit" aria-label="Enviar mensagem">
             <span>Enviar</span>
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 3-7.2 18-3.9-7.9L2 9.2 21 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 13 21 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
+        <noscript><p class="no-script-note">Sem JavaScript, use o botão Enviar. A resposta será exibida em uma nova página.</p></noscript>
       </form>
 
-      <p class="disclaimer">AcolheAI é uma ferramenta experimental. A IA pode errar e não substitui o acompanhamento de um profissional de saúde.</p>
+      <p class="conversation-note">A IA pode errar. Se precisar, procure também o apoio de uma pessoa de confiança ou de um profissional.</p>
     </section>
   </main>
 
-  <footer class="site-footer"><span>AcolheAI</span><span>Uma conversa de cada vez.</span></footer>
+  <footer class="site-footer">
+    <p>Projeto acadêmico experimental de apoio emocional inicial.</p>
+    <a href="#conversa">Iniciar conversa</a>
+  </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@ const input = document.querySelector("#message-input");
 const sendButton = document.querySelector("#send-button");
 const messages = document.querySelector("#messages");
 const statusMessage = document.querySelector("#chat-status");
-const suggestions = document.querySelector("#suggestions");
+const historyInput = document.querySelector("#history-input");
 
 const history = [];
 let isSending = false;
@@ -15,16 +15,16 @@ function setStatus(message, isError = false) {
 
 function updateSendButton() {
   sendButton.disabled = isSending || !input.value.trim();
-  sendButton.querySelector("span").textContent = isSending ? "Enviando" : "Enviar";
+  sendButton.textContent = isSending ? "Enviando" : "Enviar";
 }
 
 function formatTime() {
   return new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
 }
 
-function addMessage(text, role, { pending = false } = {}) {
+function addMessage(text, role, pending = false) {
   const article = document.createElement("article");
-  article.className = "message " + (role === "user" ? "message-user" : "message-assistant");
+  article.className = "message " + (role === "user" ? "user-message" : "assistant-message");
   if (pending) article.classList.add("message-pending");
   const paragraph = document.createElement("p");
   paragraph.textContent = text;
@@ -36,20 +36,6 @@ function addMessage(text, role, { pending = false } = {}) {
   messages.append(article);
   messages.scrollTop = messages.scrollHeight;
   return article;
-}
-
-function addTypingIndicator() {
-  const indicator = document.createElement("div");
-  indicator.className = "message message-assistant";
-  indicator.id = "typing-indicator";
-  indicator.setAttribute("aria-label", "A IA está preparando uma resposta");
-  const dots = document.createElement("span");
-  dots.className = "typing-dots";
-  dots.setAttribute("aria-hidden", "true");
-  for (let index = 0; index < 3; index += 1) dots.append(document.createElement("span"));
-  indicator.append(dots);
-  messages.append(indicator);
-  messages.scrollTop = messages.scrollHeight;
 }
 
 function friendlyError(status) {
@@ -66,47 +52,43 @@ input.addEventListener("keydown", (event) => {
   }
 });
 
-suggestions.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-suggestion]");
-  if (!button) return;
-  input.value = button.dataset.suggestion;
-  updateSendButton();
-  input.focus();
-});
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const message = input.value.trim();
   if (!message || isSending) return;
+
   isSending = true;
   input.disabled = true;
   updateSendButton();
   setStatus("Aguarde um instante enquanto preparo uma resposta.");
-  const userMessage = addMessage(message, "user", { pending: true });
-  addTypingIndicator();
+  const userMessage = addMessage(message, "user", true);
+  const loadingMessage = addMessage("A IA está preparando uma resposta.", "assistant", true);
 
   try {
     const response = await fetch("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mensagem: message, historico: history.slice(-19) })
+      body: JSON.stringify({ mensagem: message, historico: history.slice(-18) })
     });
     let data = {};
     try { data = await response.json(); } catch { data = {}; }
     if (!response.ok || typeof data.resposta !== "string" || !data.resposta.trim()) {
       throw new Error(String(response.status || 502));
     }
+
     history.push({ role: "user", content: message }, { role: "assistant", content: data.resposta });
+    if (history.length > 18) history.splice(0, history.length - 18);
+    historyInput.value = JSON.stringify(history);
     userMessage.classList.remove("message-pending");
+    loadingMessage.remove();
     addMessage(data.resposta, "assistant");
     input.value = "";
-    suggestions.hidden = true;
     setStatus("");
   } catch (error) {
     userMessage.remove();
+    loadingMessage.remove();
     setStatus(friendlyError(Number(error.message)), true);
   } finally {
-    document.querySelector("#typing-indicator")?.remove();
     isSending = false;
     input.disabled = false;
     updateSendButton();

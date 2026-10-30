@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>AcolheAI | Conversa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#message-input">Pular para a conversa</a>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="AcolheAI, início">AcolheAI</a>
+    <a class="header-action" href="/">Página inicial</a>
+  </header>
+  <main class="fallback-layout">
+    <h1>A conversa continua.</h1>
+    <p class="fallback-intro">Este modo envia a mensagem pelo formulário e recarrega a página a cada resposta.</p>
+    <section class="fallback-conversation" aria-label="Histórico da conversa">
+      <div class="messages fallback-messages" role="log" aria-label="Mensagens da conversa">
+        <article class="message assistant-message"><p>Oi. Este é um espaço para você falar no seu ritmo. O que tem passado pela sua cabeça hoje?</p></article>
+        {% for item in historico %}
+        <article class="message {{ 'user-message' if item.role == 'user' else 'assistant-message' }}"><p>{{ item.content }}</p></article>
+        {% endfor %}
+      </div>
+      {% if erro %}<p class="chat-status is-error" role="alert">{{ erro }}</p>{% endif %}
+      <form class="composer" method="post" action="/conversa">
+        <label class="visually-hidden" for="message-input">Escreva sua mensagem</label>
+        <textarea id="message-input" name="mensagem" rows="3" maxlength="4000" placeholder="Escreva o que estiver à vontade para compartilhar..." required>{{ rascunho }}</textarea>
+        <input type="hidden" name="historico" value="{{ historico|tojson }}">
+        <div class="composer-bottom">
+          <span class="keyboard-hint">A conversa não é salva entre sessões.</span>
+          <button class="send-button" type="submit">Enviar</button>
+        </div>
+      </form>
+    </section>
+    <p class="fallback-note">As mensagens são processadas por uma inteligência artificial. Evite compartilhar dados pessoais. A ferramenta não substitui acompanhamento profissional.</p>
+  </main>
+  <footer class="site-footer"><p>Projeto acadêmico experimental de apoio emocional inicial.</p><a href="/">Voltar ao início</a></footer>
+</body>
+</html>
