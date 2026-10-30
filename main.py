@@ -23,6 +23,11 @@ def estilo():
     return send_from_directory(os.path.join(app.root_path, "public"), "style.css")
 
 
+@app.get("/app.js")
+def javascript():
+    return send_from_directory(os.path.join(app.root_path, "public"), "app.js")
+
+
 @app.post("/chat")
 def chat():
     dados = request.get_json(silent=True)

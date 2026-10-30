@@ -25,3 +25,7 @@ Praticar integração entre uma interface web, uma API em Flask e um serviço de
 ## Hospedagem na Vercel
 
 O projeto exporta a aplicação Flask por `app.py` e mantém os arquivos do navegador em `public/`, estrutura reconhecida pela Vercel. Importe este repositório na Vercel, mantenha a pasta raiz como diretório do projeto, adicione `GROQ_API_KEY` em **Settings → Environment Variables** e faça o deploy. Configure a variável para Production (e Preview se quiser testar prévias). Nunca coloque a chave em arquivos do repositório.
+
+## Interface
+
+A interface responsiva usa HTML, CSS e JavaScript nativos. Não há persistência do histórico entre sessões, e os exemplos de início apenas preenchem o campo de mensagem. Evite compartilhar informações pessoais: o texto é processado por um serviço de inteligência artificial.
