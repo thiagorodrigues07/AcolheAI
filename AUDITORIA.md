@@ -2,24 +2,26 @@
 
 ## Encontrado
 
-A cópia de origem em uma pasta tinha arquivos vazios; o código utilizável estava em um ZIP aninhado. O backend recebia histórico sem validar formato/tamanho, rodava com modo debug e devolvia detalhes internos de exceções. A interface inicial inseria texto do usuário via `innerHTML`, permitindo injeção de HTML. A lista de dependências tinha nome incorreto e estava vazia.
+A cópia de origem em uma pasta tinha arquivos vazios; o código utilizável estava em um ZIP aninhado. O backend recebia histórico sem validar formato/tamanho, rodava com modo debug e devolvia detalhes internos de exceções. A interface inseria texto do usuário via `innerHTML`, permitindo injeção de HTML. A lista de dependências tinha nome incorreto e estava vazia.
 
-## Corrigido anteriormente
+## Corrigido
 
 Consolidada a cópia funcional; corrigida a lista de dependências; adicionados limites e validação para mensagem e histórico; chave da API validada por variável de ambiente; erros internos não são devolvidos ao cliente; debug desligado; texto exibido com `textContent`; incluídos README, `.gitignore` e licença MIT. CORS foi removido pois a interface e API são servidas pela mesma origem.
 
-## Direção visual aprovada
+## Sugestões
 
-Interface editorial de conversa, com grade assimétrica, verde profundo e terracota, Newsreader e DM Sans. Não usa imagens genéricas, emojis, cards promocionais, depoimentos, métricas inventadas ou texto de venda. As chamadas "Iniciar conversa" levam diretamente ao chat. A interface informa o processamento por IA, recomenda evitar dados pessoais e explica que não substitui acompanhamento profissional.
+Adicionar testes automatizados, configurar limites/rate limiting para uso público e revisar o prompt de segurança antes de apresentar o sistema como apoio em situações de crise. O serviço requer chave Groq e acesso à internet para a conversa.
 
-## Melhorias implementadas
+## Verificação anterior
 
-Redesenhada a interface responsiva em HTML, CSS e JavaScript nativos, sem animações de rolagem. Adicionados estados acessíveis de envio e erro, navegação por teclado e preservação da mensagem em caso de falha. O histórico continua apenas na conversa atual. O contrato JSON `POST /chat` foi preservado. Uma rota HTML `POST /conversa` permite usar o formulário sem JavaScript, com respostas renderizadas no servidor, conteúdo escapado pelo Jinja e verificação de origem da requisição.
+Página inicial, rota de status, validação de JSON e comportamento sem chave passaram no teste de fumaça local usando Flask test client. A chamada real à Groq não foi testada porque depende de chave e acesso externo.
 
-## Verificação
+Preparado o ponto de entrada `app.py` e movidos os arquivos estáticos para `public/` para compatibilidade com a Vercel.
 
-A sintaxe de `public/app.js` passou em `node --check`. O Flask test client confirmou HTTP 200 para a página, CSS, JavaScript e `/status`; o chat JSON mockado respondeu 200; o formulário sem JavaScript respondeu 200 e escapou texto semelhante a HTML; envios de outra origem ao formulário são bloqueados com 403; sem chave configurada, ambos os envios responderam 503 sem expor a mensagem interna de configuração. O envio real à Groq não foi testado. A revisão visual em navegador não foi concluída porque o navegador disponível não conseguiu conectar ao servidor local de desenvolvimento.
+## Redesign da interface
 
-## Pendências e sugestões
+A interface antiga foi substituída por uma experiência responsiva em HTML, CSS e JavaScript nativos. Foram adicionados hierarquia visual mais clara, exemplos opcionais para iniciar a conversa, avisos sobre processamento por IA e limites do sistema, controles acessíveis por teclado, estados de envio e erro, e preservação do rascunho quando a API falha. O contrato `POST /chat` e o formato de histórico foram mantidos. A exibição de mensagens continua usando `textContent` para evitar interpretar conteúdo como HTML.
 
-O prompt do backend contém referências de apoio para situações de crise, mas a interface não oferece orientação específica. Revisar a precisão e adequação dessas referências continua sendo uma pendência antes de divulgar o sistema como apoio em crise. Configurar rate limiting antes de abrir o chat publicamente.
+## Sugestão de segurança
+
+A interface não mostra orientação específica para situações de crise. O prompt do backend contém orientações e referências de apoio; revisar a precisão e adequação dessas referências continua sendo uma pendência antes de divulgar o sistema como apoio em crise.
